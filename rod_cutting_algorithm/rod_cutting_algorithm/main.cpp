@@ -18,6 +18,9 @@
 
 int memoized_cut_rod(int p[], int n);
 int memoized_cut_rod_aux(int p[], int n, int r[]);
+int ext_memoized_cut_rod(int p[], int n, int r[], int s[]);
+int ext_memoized_cut_rod_aux(int p[], int n, int r[], int s[]);
+
 int bottom_up_cut_rod(int p[], int n);
 int ext_bottom_up_cut_rod(int p[], int n, int r[], int s[]);
 void print_cut_rod_solution(int p[], int n);
@@ -60,14 +63,7 @@ int memoized_cut_rod(int p[], int n) {
     for(int i = 0; i <= n; i++)
         r[i] = INT_MIN;
     
-    int result = memoized_cut_rod_aux(p, n, r);
-    
-    for(int i = 0; i <= n; i++)
-        printf("%d ", r[i]);
-    
-    printf("\n");
-    
-    return result;
+    return memoized_cut_rod_aux(p, n, r);
 }
 
 int memoized_cut_rod_aux(int p[], int n, int r[]) {
@@ -82,6 +78,39 @@ int memoized_cut_rod_aux(int p[], int n, int r[]) {
         q = INT_MIN;
         for(int i = 1; i <= n; i++)
             q = std::max(q, p[i-1] + memoized_cut_rod_aux(p, n-i, r));
+    }
+    
+    r[n] = q;
+    
+    return q;
+}
+
+int ext_memoized_cut_rod(int p[], int n, int r[], int s[]) {
+    for(int i = 0; i <= n; i++)
+        r[i] = INT_MIN;
+    
+    int result = ext_memoized_cut_rod_aux(p, n, r, s);
+    
+    return result;
+}
+
+int ext_memoized_cut_rod_aux(int p[], int n, int r[], int s[]) {
+    if(r[n] >= 0)
+        return r[n];
+    
+    int q;
+    
+    if(n == 0)
+        q = 0;
+    else {
+        q = INT_MIN;
+        for(int i = 1; i <= n; i++) {
+            int x = p[i-1] + ext_memoized_cut_rod_aux(p, n-i, r, s);
+            if(q < x) {
+                q = x;
+                s[n] = i;
+            }
+        }
     }
     
     r[n] = q;
