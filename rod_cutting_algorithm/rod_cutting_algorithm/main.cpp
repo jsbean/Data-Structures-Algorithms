@@ -20,6 +20,7 @@ int memoized_cut_rod(int p[], int n);
 int memoized_cut_rod_aux(int p[], int n, int r[]);
 int bottom_up_cut_rod(int p[], int n);
 int ext_bottom_up_cut_rod(int p[], int n, int r[], int s[]);
+int print_cut_rod_solution(int p[], int n);
 
 int main(int argc, const char * argv[]) {
     
@@ -114,7 +115,7 @@ int ext_bottom_up_cut_rod(int p[], int n, int r[], int s[]) {
         
         for(int i = 1; i <= j; i++) {
             if(q < p[i - 1] + r[j - i]) {
-                q = p[i - 1] + r[j - 1];
+                q = p[i - 1] + r[j - i];
                 s[j] = i; // record best cut
             }
         }
@@ -123,4 +124,17 @@ int ext_bottom_up_cut_rod(int p[], int n, int r[], int s[]) {
     }
     
     return r[n];
+}
+
+void print_cut_rod_solution(int p[], int n) {
+    int r[MAXSIZE + 1];
+    int s[MAXSIZE + 1];
+    
+    ext_bottom_up_cut_rod(p, n, r, s);
+    
+    printf("Cuts:");
+    while(n > 0) {
+        printf("\t%d", s[n]);
+        n -= s[n];
+    }
 }
