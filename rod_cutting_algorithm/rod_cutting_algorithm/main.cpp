@@ -13,7 +13,6 @@
 
 #include <iostream>
 #include <algorithm>
-#include <vector>
 
 #define MAXSIZE 20
 
