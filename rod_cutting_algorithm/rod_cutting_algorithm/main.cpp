@@ -19,6 +19,7 @@
 int memoized_cut_rod(int p[], int n);
 int memoized_cut_rod_aux(int p[], int n, int r[]);
 int bottom_up_cut_rod(int p[], int n);
+int ext_bottom_up_cut_rod(int p[], int n, int r[], int s[]);
 
 int main(int argc, const char * argv[]) {
     
@@ -100,6 +101,25 @@ int bottom_up_cut_rod(int p[], int n) {
         }
         
         r[j] = q;
+    }
+    
+    return r[n];
+}
+
+int ext_bottom_up_cut_rod(int p[], int n, int r[], int s[]) {
+    r[0] = 0;
+    
+    for(int j = 1; j <= n; j++) {
+        int q = INT_MIN;
+        
+        for(int i = 1; i <= j; i++) {
+            if(q < p[i - 1] + r[j - i]) {
+                q = p[i - 1] + r[j - 1];
+                s[j] = i; // record best cut
+            }
+        }
+        
+        r[j] = q; // record value
     }
     
     return r[n];
