@@ -23,7 +23,8 @@ int ext_memoized_cut_rod_aux(int p[], int n, int r[], int s[]);
 
 int bottom_up_cut_rod(int p[], int n);
 int ext_bottom_up_cut_rod(int p[], int n, int r[], int s[]);
-void print_cut_rod_solution(int p[], int n);
+void print_cut_rod_solution_bottom_up(int p[], int n);
+void print_cut_rod_solution_memoized(int p[], int n);
 
 int main(int argc, const char * argv[]) {
     
@@ -52,7 +53,7 @@ int main(int argc, const char * argv[]) {
         p[i] = atoi(*argv);
     }
     
-    print_cut_rod_solution(p, n);
+    print_cut_rod_solution_bottom_up(p, n);
     
     return 0;
 }
@@ -155,11 +156,25 @@ int ext_bottom_up_cut_rod(int p[], int n, int r[], int s[]) {
     return r[n];
 }
 
-void print_cut_rod_solution(int p[], int n) {
+void print_cut_rod_solution_bottom_up(int p[], int n) {
     int r[MAXSIZE + 1];
     int s[MAXSIZE + 1];
     
     ext_bottom_up_cut_rod(p, n, r, s);
+    
+    printf("Cuts:");
+    while(n > 0) {
+        printf(" %d", s[n]);
+        n -= s[n];
+    }
+    printf("\n");
+}
+
+void print_cut_rod_solution_memoized(int p[], int n) {
+    int r[MAXSIZE + 1];
+    int s[MAXSIZE + 1];
+    
+    ext_memoized_cut_rod(p, n, r, s);
     
     printf("Cuts:");
     while(n > 0) {
