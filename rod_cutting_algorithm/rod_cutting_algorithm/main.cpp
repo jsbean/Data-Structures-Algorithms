@@ -20,7 +20,7 @@ int memoized_cut_rod(int p[], int n);
 int memoized_cut_rod_aux(int p[], int n, int r[]);
 int bottom_up_cut_rod(int p[], int n);
 int ext_bottom_up_cut_rod(int p[], int n, int r[], int s[]);
-int print_cut_rod_solution(int p[], int n);
+void print_cut_rod_solution(int p[], int n);
 
 int main(int argc, const char * argv[]) {
     
