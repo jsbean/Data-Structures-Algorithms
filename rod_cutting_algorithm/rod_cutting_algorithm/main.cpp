@@ -49,7 +49,7 @@ int main(int argc, const char * argv[]) {
         p[i] = atoi(*argv);
     }
     
-    printf("answer: %d\n", bottom_up_cut_rod(p, n));
+    print_cut_rod_solution(p, n);
     
     return 0;
 }
@@ -134,7 +134,8 @@ void print_cut_rod_solution(int p[], int n) {
     
     printf("Cuts:");
     while(n > 0) {
-        printf("\t%d", s[n]);
+        printf(" %d", s[n]);
         n -= s[n];
     }
+    printf("\n");
 }
