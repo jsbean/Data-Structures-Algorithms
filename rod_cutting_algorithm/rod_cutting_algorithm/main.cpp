@@ -53,7 +53,7 @@ int main(int argc, const char * argv[]) {
         p[i] = atoi(*argv);
     }
     
-    print_cut_rod_solution_bottom_up(p, n);
+    print_cut_rod_solution_memoized(p, n);
     
     return 0;
 }
