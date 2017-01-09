@@ -8,7 +8,7 @@
 
 import Foundation
 
-func matrix_chain_order(dimensions: [Int]) -> (multiplications: [[Int]], splits: [[Int]]) {
+func matrixChainOrder(dimensions: [Int]) -> (multiplications: [[Int]], splits: [[Int]]) {
     let n = dimensions.count - 1
     var multiplications = [[Int]](repeating: [Int](repeating: 0, count: n), count: n)
     var splits = [[Int]](repeating: [Int](repeating: 0, count: n - 1), count: n - 1)
