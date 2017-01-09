@@ -39,10 +39,6 @@ func matrixChainOrder(dimensions: [Int]) -> (multiplications: [[Int]], splits: [
     return (multiplications, splits)
 }
 
-
-
-
-
 /// - note: Puts the given `separator` between elements of the nested array.
 func format <T> (_ array: [[T]], separator: String = "  ") -> String {
     
