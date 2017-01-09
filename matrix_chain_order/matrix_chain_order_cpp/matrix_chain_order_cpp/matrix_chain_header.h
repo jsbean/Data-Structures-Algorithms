@@ -23,7 +23,7 @@ int matrix_chain_order(int n, int *p, int m[][MAX_MATRICES], int s[][MAX_MATRICE
     int i, j, k, l, q;
     
     for(l = 2; l <= n; l++)
-        for(i = 0; i <= n - l + 1; i++) {
+        for(i = 0; i <= n - l; i++) {
             m[i][j = i+l-1] = INT_MAX;
             for(k = i; k < j; k++)
                 if((q = m[i][k] + m[k+1][j] + p[i]*p[k+1]*p[j+1]) < m[i][j])
