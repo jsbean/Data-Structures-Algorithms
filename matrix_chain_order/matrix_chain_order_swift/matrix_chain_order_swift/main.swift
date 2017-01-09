@@ -24,7 +24,7 @@ func matrixChainOrder(dimensions: [Int]) -> (multiplications: [[Int]], splits: [
             // try every possible index for splitting the chain
             for mid in left...right-1 {
                 // new possible minimum = number of multiplications needed to get to this point
-                var x : Int = multiplications[left][mid] + multiplications[mid + 1][right]
+                var x = multiplications[left][mid] + multiplications[mid + 1][right]
                 // plus the number of multiplications needed to multiply the two resulting matrices
                 x += dimensions[left] * dimensions[mid + 1] * dimensions[right + 1]
                 // store a new minimum
@@ -85,7 +85,7 @@ func space(_ amount: Int) -> String {
     return String(repeating: " ", count: amount)
 }
 
-let result = matrix_chain_order(dimensions:[30, 35, 15, 5, 10, 20, 25])
+let result = matrixChainOrder(dimensions:[30, 35, 15, 5, 10, 20, 25])
 
 print("Multiplications:")
 print(format(result.multiplications))
