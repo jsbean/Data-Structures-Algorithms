@@ -49,14 +49,9 @@ func columnWidth <T> (_ array: [[T]]) -> Int {
         return 0
     }
     
-    let columnCount = array[0].count
-    
-    var result = Array(repeating: 0, count: columnCount)
-    for column in 0 ..< columnCount {
-        result[column] = array.map { row in stringWidth(row[column]) }.max() ?? 0
-    }
-    
-    return result.max() ?? 0
+    return (0 ..< array[0].count)
+        .flatMap { column in array.map { row in stringWidth(row[column]) }.max() ?? 0 }
+        .max() ?? 0
 }
 
 /// Returns the width of a string-interpolated representation of any value.
