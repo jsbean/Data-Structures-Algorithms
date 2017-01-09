@@ -9,4 +9,5 @@ Sort of a playground/sandbox as I work through some algorithms textbooks.
 Name (Book) [Langs]
 
 Rod Cutting Algorithm (CLRS) [C++]
-Matrix Chain Ordering Algorithm (CLRS) [C++]
+
+Matrix Chain Ordering Algorithm (CLRS) [C++, Swift]
