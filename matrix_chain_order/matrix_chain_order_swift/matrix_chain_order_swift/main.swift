@@ -83,6 +83,5 @@ let result = matrixChainOrder(dimensions:[30, 35, 15, 5, 10, 20, 25])
 print("Multiplications:")
 print(format(result.multiplications))
 print()
-
 print("Splits:")
 print(format(result.splits, separator: "  "))
