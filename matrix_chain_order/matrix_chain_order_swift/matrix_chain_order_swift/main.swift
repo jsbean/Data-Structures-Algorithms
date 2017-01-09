@@ -39,17 +39,57 @@ func matrix_chain_order(dimensions: [Int]) -> (multiplications: [[Int]], splits:
     return (multiplications, splits)
 }
 
-func format <T> (_ array: Array<Array<T>>, separator: String = "") -> String {
-    return array.map { format($0, separator: separator) }.joined(separator: "\n")
+/// - returns: Maximum column width of 2D array.
+///
+/// - note: Assumes length of each subarrays are equivalent
+/// - note: Assumes `T` values don't have a complex `CustomStringConvertible` implementation.
+func columnWidth <T> (_ array: [[T]]) -> Int {
+    
+    guard !array.isEmpty else {
+        return 0
+    }
+    
+    let columnCount = array[0].count
+    var result = Array(repeating: 0, count: columnCount)
+    
+    for column in 0 ..< columnCount {
+        result[column] = array
+            .map { row in stringWidth(row[column]) }
+            .max() ?? 0
+    }
+    
+    return result.max() ?? 0
 }
 
-func format <T> (_ array: Array<T>, separator: String = "") -> String {
-    return array.map { "\($0)" }.joined(separator: separator)
+/// Returns the width of a string-interpolated representation of any value.
+///
+/// - warning: Assumes primitive type with no fancier `CustomStringConvertible` implementation.
+func stringWidth (_ value: Any) -> Int {
+    return "\(value)".characters.count
+}
+
+/// - note: Puts the given `separator` between elements of the nested array.
+func format <T> (_ array: [[T]], separator: String = "  ") -> String {
+    return array
+        .map { format($0, columnWidth: columnWidth(array), separator: separator) }
+        .joined(separator: "\n")
+}
+
+/// - warning: Don't use `\t`, though. Doesn't register correctly.
+func format <T> (_ array: [T], columnWidth: Int, separator: String = "  ") -> String {
+    return array.map { "\($0)\(separator)\(space(columnWidth - stringWidth($0)))" }.joined()
+}
+
+/// - returns: Whitespace with the given width.
+func space(_ amount: Int) -> String {
+    return String(repeating: " ", count: amount)
 }
 
 let result = matrix_chain_order(dimensions:[30, 35, 15, 5, 10, 20, 25])
-print("multiplications:")
-print(format(result.multiplications, separator: ",\t"))
+
+print("Multiplications:")
+print(format(result.multiplications))
 print()
-print("splits:")
-print(format(result.splits, separator: "\t"))
+
+print("Splits:")
+print(format(result.splits, separator: "  "))
