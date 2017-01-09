@@ -39,43 +39,48 @@ func matrixChainOrder(dimensions: [Int]) -> (multiplications: [[Int]], splits: [
     return (multiplications, splits)
 }
 
-/// - returns: Maximum column width of 2D array.
-///
-/// - note: Assumes length of each subarrays are equivalent
-/// - note: Assumes `T` values don't have a complex `CustomStringConvertible` implementation.
-func columnWidth <T> (_ array: [[T]]) -> Int {
-    
-    guard !array.isEmpty else {
-        return 0
-    }
-    
-    return (0 ..< array[0].count)
-        .flatMap { column in array.flatMap { row in width(row[column]) }.max() }
-        .max() ?? 0
-}
 
-/// Returns the width of a string-interpolated representation of any value.
-///
-/// - warning: Assumes primitive type with no fancier `CustomStringConvertible` implementation.
-func width(_ value: Any) -> Int {
-    return "\(value)".characters.count
-}
+
+
 
 /// - note: Puts the given `separator` between elements of the nested array.
 func format <T> (_ array: [[T]], separator: String = "  ") -> String {
+    
+    /// Returns the width of a string-interpolated representation of any value.
+    ///
+    /// - warning: Assumes primitive type with no fancier `CustomStringConvertible` implementation.
+    func width(_ value: Any) -> Int {
+        return "\(value)".characters.count
+    }
+    
+    /// - returns: Whitespace with the given width.
+    func space(_ amount: Int) -> String {
+        return String(repeating: " ", count: amount)
+    }
+    
+    /// - returns: Maximum column width of 2D array.
+    ///
+    /// - note: Assumes length of each subarrays are equivalent
+    /// - note: Assumes `T` values don't have a complex `CustomStringConvertible` implementation.
+    func columnWidth <T> (_ array: [[T]]) -> Int {
+        
+        guard !array.isEmpty else {
+            return 0
+        }
+        
+        return (0 ..< array[0].count)
+            .flatMap { column in array.flatMap { row in width(row[column]) }.max() }
+            .max() ?? 0
+    }
+
+    /// - warning: Don't use `\t`, though. Doesn't register correctly.
+    func format <T> (_ array: [T], columnWidth: Int, separator: String = "  ") -> String {
+        return array.map { "\($0)\(separator)\(space(columnWidth - width($0)))" }.joined()
+    }
+    
     return array
         .map { format($0, columnWidth: columnWidth(array), separator: separator) }
         .joined(separator: "\n")
-}
-
-/// - warning: Don't use `\t`, though. Doesn't register correctly.
-func format <T> (_ array: [T], columnWidth: Int, separator: String = "  ") -> String {
-    return array.map { "\($0)\(separator)\(space(columnWidth - width($0)))" }.joined()
-}
-
-/// - returns: Whitespace with the given width.
-func space(_ amount: Int) -> String {
-    return String(repeating: " ", count: amount)
 }
 
 let result = matrixChainOrder(dimensions:[30, 35, 15, 5, 10, 20, 25])
