@@ -50,12 +50,10 @@ func columnWidth <T> (_ array: [[T]]) -> Int {
     }
     
     let columnCount = array[0].count
-    var result = Array(repeating: 0, count: columnCount)
     
+    var result = Array(repeating: 0, count: columnCount)
     for column in 0 ..< columnCount {
-        result[column] = array
-            .map { row in stringWidth(row[column]) }
-            .max() ?? 0
+        result[column] = array.map { row in stringWidth(row[column]) }.max() ?? 0
     }
     
     return result.max() ?? 0
