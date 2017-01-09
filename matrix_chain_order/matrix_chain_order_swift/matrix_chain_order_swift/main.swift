@@ -39,30 +39,17 @@ func matrix_chain_order(dimensions: [Int]) -> (multiplications: [[Int]], splits:
     return (multiplications, splits)
 }
 
-// really just wrote these two for fun with type checking
-func print_array(array a: [Any]) {
-    for x in a {
-        print(x, terminator:", ")
-    }
-    print()
+func format <T> (_ array: Array<Array<T>>, separator: String = "") -> String {
+    return array.map { format($0, separator: separator) }.joined(separator: "\n")
 }
 
-func print_nested_array(array a: [Any]) {
-    for x in a {
-        if let y = x as? [Any] {
-            print_nested_array(array: y)
-        } else {
-            print(x, terminator:"\t")
-        }
-    }
-    print()
+func format <T> (_ array: Array<T>, separator: String = "") -> String {
+    return array.map { "\($0)" }.joined(separator: separator)
 }
 
-// test
 let result = matrix_chain_order(dimensions:[30, 35, 15, 5, 10, 20, 25])
-
 print("multiplications:")
-print_nested_array(array:result.multiplications)
-
+print(format(result.multiplications, separator: ",\t"))
+print()
 print("splits:")
-print_nested_array(array:result.splits)
+print(format(result.splits, separator: "\t"))
